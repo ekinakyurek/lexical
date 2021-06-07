@@ -1,0 +1,65 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+\usepackage{hyperref}
+\usepackage{parskip}
+
+\newcommand{\KL}[2]{\mathrm{KL}(#1~\|~#2)}
+
+\begin{document}
+
+Suppose we wish to estimate $p(y \mid x)$ when we observe $(x_i, y_i) \sim p(y
+\mid x) p_1(x) $ but care about achieving high accuracy under some other $p(x
+\mid x) p_2(x)$ (the \emph{covariate shift} problem). Suppose further that we
+have some information about $y$ under the target distribution---namely that we
+can sample from $p_2(y) := \sum_x p_2(x) p(y \mid x)$. How can we use this
+information to find some $p_\theta(y \mid x)$ that maximizes $E_{x \sim p_2(x)} p(x
+\mid y)$?
+
+Idea: optimize
+\begin{align}
+  \min_{\theta,\eta} ~~ &-\sum_i \log p_\theta(y_i \mid x_i) + \lambda~\KL{p_2}{p_\eta(x)
+  p_\theta(y \mid x)}
+\end{align}
+This can be viewed as a form of posterior regularization and specifically
+\textbf{expectation regularization} as in
+\url{https://www.aclweb.org/anthology/D19-1004/}.
+\begin{align}
+  &= -\sum_i \log p_\theta(y_i \mid x_i) + \lambda H(p_2) - \lambda E_{y \sim p_2(y)}
+  [\log E_{x \sim p_\eta} p_\theta(y \mid x)] \\
+  &\leq -\sum_i \log p_\theta(y_i \mid x_i) + \lambda H(p_2) -  \lambda E_{y \sim p_2(y)}
+  E_{x \sim p_\eta} \log p_\theta(y \mid x) \\
+  \intertext{(Jensen)}
+  \min_{\theta, \eta, \phi} ~~ &\leq -\sum_i \log p_\theta(y_i \mid x_i) + \lambda H(p_2) -  \lambda E_{y \sim p_2(y)}[
+  E_{x \sim q_\phi(x \mid y)} [\log p_\theta(y \mid x)] -\KL{q_\phi(x \mid y)}
+  {p_\eta(x)}]
+\end{align}
+(ELBO)
+
+Important special case of this model: \textbf{backtranslation}, where we assume
+that $q(x \mid y)$ is the same under $p_1$ and $p_2$ and estimate it directly
+from training data. From this perpsective, backtranslation can be viewed not
+just as amortizing a noisy channel translation model but actually providing
+robustness to the covariate shift implied by any difference between $p(y)$ on
+bilingual and monolingual data.
+
+Claim: we can get lots of ``NLP-flavored'' inductive biases in this framework
+just by setting $p(y)$ uniform over an appropriate set. Example:
+
+\paragraph{Mutual exclusivity}
+Let $\pi$ be a permutation on $[n]$ and $(x_i, y_i)$ be one-hot vectors $(e_i,
+e_{\pi(i)}$ for $i \in [n-1]$. Prove that a regularized logistic regression
+model has $p(y \mid e_{n-1})$ uniform over classes when trained via MLE but
+mostly on $e_{\pi(n-1)}$ when trained as in Equation 1.
+
+\paragraph{Compositionality}
+As above, but let each $x_i$ be a concatenation of two one-hot vectors and $y_i$
+be the concatenation of their permuted values. Prove that if we hold out $k$ of
+these vectors, Equation 1 still recovers the correct values but MLE doesn't.
+
+\paragraph{Productivity}
+Something about learning a weighted string transducer.
+
+\end{document}

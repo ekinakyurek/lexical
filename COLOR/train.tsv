@@ -1,0 +1,14 @@
+dax 	  RED
+lug 	  BLUE
+wif 	  GREEN
+zup 	  YELLOW
+lug fep 	  BLUE BLUE BLUE
+dax fep 	  RED RED RED
+lug blicket wif 	  BLUE GREEN BLUE
+wif blicket dax 	  GREEN RED GREEN
+lug kiki wif 	  GREEN BLUE
+dax kiki lug 	  BLUE RED
+lug fep kiki wif 	  GREEN BLUE BLUE BLUE
+wif kiki dax blicket lug 	  RED BLUE RED GREEN
+lug kiki wif fep 	  GREEN GREEN GREEN BLUE
+wif blicket dax kiki lug 	  BLUE GREEN RED GREEN

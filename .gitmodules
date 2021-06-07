@@ -1,0 +1,6 @@
+[submodule "COGS"]
+	path = COGS
+	url = https://github.com/najoungkim/COGS.git
+[submodule "SCAN"]
+	path = SCAN
+	url = https://github.com/brendenlake/SCAN.git
