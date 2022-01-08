@@ -1,5 +1,5 @@
 # Lexicon Learning for Few-Shot Neural Sequence Modeling
-Paper: [Lexicon Learning for Few-Shot Neural Sequence Modeling](https://drive.google.com/file/d/1jDCXL4MT_rLN2X2QNHFae90r17w3HM3g/view?usp=sharing)    
+Paper: [Lexicon Learning for Few-Shot Neural Sequence Modeling](https://arxiv.org/abs/2106.03993)    
 Ekin Akyürek, Jacob Andreas ACL 2021
 
 ![Lexicon Model](lexicon_model.png "Lexicon Model")
